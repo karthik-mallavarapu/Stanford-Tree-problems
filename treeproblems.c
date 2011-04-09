@@ -18,13 +18,16 @@ int maxDepth(struct node*);
 void testMaxDepth(); 
 int minValue(struct node*);
 void testMinValue(); 
+void printTree(struct node*);
+void testPrintTree(); 
  
 int main() {
 
 //testBuild123();
 //testSize();
 //testMaxDepth();
-testMinValue();
+//testMinValue();
+testPrintTree();
 return 0;
 
 }
@@ -173,4 +176,31 @@ rootNode = insert(rootNode,8);
 rootNode = insert(rootNode,9);
 int min = minValue(rootNode);
 printf("Min Value the binary search tree is %d \n",min);
+}
+
+/*Print the binary search tree in ascending order. */
+void printTree(struct node* n) {
+  
+if(n->left != NULL) {
+  printTree(n->left);
+}
+printf("%d ",n->data);
+
+if(n->right != NULL) {
+  printTree(n->right);
+  //printf("%d ",(n)->data);
+}
+
+}
+
+/*Test printTree() */
+void testPrintTree() {
+struct node* rootNode = insert(NULL,4);
+rootNode = insert(rootNode,3);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,1);
+rootNode = insert(rootNode,6);
+rootNode = insert(rootNode,5);
+rootNode = insert(rootNode,7);
+printTree(rootNode);
 }
