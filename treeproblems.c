@@ -20,6 +20,8 @@ int minValue(struct node*);
 void testMinValue(); 
 void printTree(struct node*);
 void testPrintTree(); 
+void printPostOrder(struct node*);
+void testPrintPostOrder();
  
 int main() {
 
@@ -27,7 +29,8 @@ int main() {
 //testSize();
 //testMaxDepth();
 //testMinValue();
-testPrintTree();
+//testPrintTree();
+testPrintPostOrder();
 return 0;
 
 }
@@ -203,4 +206,35 @@ rootNode = insert(rootNode,6);
 rootNode = insert(rootNode,5);
 rootNode = insert(rootNode,7);
 printTree(rootNode);
+}
+
+/*Print the nodes of a binary search tree according to a postorder bottom-up traversal.
+    4
+   / \
+  2   5
+ / \
+1   3 The output of the function should be 1,3,2,5,4.
+   
+ */
+void printPostOrder(struct node* n) {
+
+if(n->left != NULL) {
+  printPostOrder(n->left);
+}
+
+if(n->right != NULL) {
+  printPostOrder(n->right);
+}
+printf("%d ",n->data);
+
+}
+
+/*Test function for printPostOrder()*/
+void testPrintPostOrder() {
+struct node* rootNode = insert(NULL,4);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,5);
+rootNode = insert(rootNode,3);
+rootNode = insert(rootNode,1);
+printPostOrder(rootNode);
 }
