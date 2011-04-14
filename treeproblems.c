@@ -22,6 +22,9 @@ void printTree(struct node*);
 void testPrintTree(); 
 void printPostOrder(struct node*);
 void testPrintPostOrder();
+int hasPathSum(struct node*, int);
+//int pathSum(struct node*);
+void testHasPathSum(); 
  
 int main() {
 
@@ -30,7 +33,8 @@ int main() {
 //testMaxDepth();
 //testMinValue();
 //testPrintTree();
-testPrintPostOrder();
+//testPrintPostOrder();
+testHasPathSum();
 return 0;
 
 }
@@ -237,4 +241,50 @@ rootNode = insert(rootNode,5);
 rootNode = insert(rootNode,3);
 rootNode = insert(rootNode,1);
 printPostOrder(rootNode);
+}
+
+int hasPathSum(struct node* n, int sum) {
+
+int stemp=0;
+if(n != NULL) {
+  sum = sum - n->data;
+  if(n->left != NULL || n->right != NULL) {
+    if(n->right == NULL) {
+     if(hasPathSum(n->left,sum) == 1) 
+       return 1;
+     }
+    else if(n->left == NULL) {
+     if(hasPathSum(n->right,sum) == 1)
+      return 1;
+    }
+    else {
+      if(hasPathSum(n->left,sum) == 1)
+        return 1;
+      if(hasPathSum(n->right,sum) == 1)
+        return 1;
+
+    }
+
+  }  
+if(sum == 0)
+  return 1;  
+else return -1;
+    
+}    
+
+}
+
+void testHasPathSum() {
+
+struct node* rootNode = insert(NULL,5);
+rootNode = insert(rootNode,4);
+rootNode = insert(rootNode,8);
+rootNode = insert(rootNode,3);
+rootNode = insert(rootNode,7);
+rootNode = insert(rootNode,9);
+if(hasPathSum(rootNode,22) == 1)
+  printf("Works \n");
+else
+  printf("you suckk..!! \n");
+
 }
