@@ -27,6 +27,11 @@ void testHasPathSum();
 void printPaths(struct node*); 
 void testPrintPaths();
 void printPathsRecur(struct node*, int *,int);
+void mirror(struct node*);
+void testMirror();
+void doubleTree(struct node*);
+void testDoubleTree();
+ 
  
 int main() {
 
@@ -37,7 +42,9 @@ int main() {
 //testPrintTree();
 //testPrintPostOrder();
 //testHasPathSum();
-testPrintPaths();
+//testPrintPaths();
+//testMirror();
+testDoubleTree();
 return 0;
 
 }
@@ -337,5 +344,81 @@ rootNode = insert(rootNode,9);
 rootNode = insert(rootNode,2);
 rootNode = insert(rootNode,1);
 printPaths(rootNode);
+
+}
+
+void mirror(struct node* n) {
+
+if(n != NULL) {
+  if(n->left != NULL || n->right != NULL) {
+    if(n->left == NULL) {
+      n->left = n->right;
+      n->right = NULL;
+      mirror(n->left);
+    }
+    else if(n->right == NULL) {
+      n->right = n->left;
+      n->left = NULL;
+      mirror(n->right);
+    } 
+    else {
+      struct node* temp = n->left;
+      n->left = n->right;
+      n->right = temp;
+      mirror(n->left);
+      mirror(n->right);
+    }  
+  }
+
+}
+
+}
+
+void testMirror() {
+struct node* rootNode = insert(NULL,5);
+rootNode = insert(rootNode,3);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,4);
+rootNode = insert(rootNode,8);
+rootNode = insert(rootNode,9);
+printTree(rootNode);
+mirror(rootNode); 
+printf("\n---------------------------------\n"); 
+printTree(rootNode);
+printf("\n---------------------------------\n"); 
+}
+
+void doubleTree(struct node* n) {
+
+if(n != NULL) {
+  struct node* temp = n->left;
+  n->left = (struct node*)malloc(sizeof(struct node));
+  (n->left)->data = n->data;
+  (n->left)->left = temp;
+  (n->left)->right = NULL;
+  if(n->right != NULL) {
+    doubleTree(n->right);
+  }
+  if((n->left)->left != NULL) {
+    doubleTree((n->left)->left);
+  }
+}
+
+}
+
+void testDoubleTree() {
+struct node* rootNode = insert(NULL,3);
+rootNode = insert(rootNode,4);
+rootNode = insert(rootNode,5);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,1);
+printf("\n---------------------------------\n"); 
+printf("Printing the tree before doubletree() is called \n");
+printTree(rootNode);
+printf("\n---------------------------------\n"); 
+printf("Printing the tree after doubletree() is called \n");
+doubleTree(rootNode);
+printTree(rootNode);
+printf("Printing the tree after doubletree() is called \n");
 
 }
