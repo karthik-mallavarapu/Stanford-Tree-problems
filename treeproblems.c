@@ -23,8 +23,10 @@ void testPrintTree();
 void printPostOrder(struct node*);
 void testPrintPostOrder();
 int hasPathSum(struct node*, int);
-//int pathSum(struct node*);
 void testHasPathSum(); 
+void printPaths(struct node*); 
+void testPrintPaths();
+void printPathsRecur(struct node*, int *,int);
  
 int main() {
 
@@ -34,7 +36,8 @@ int main() {
 //testMinValue();
 //testPrintTree();
 //testPrintPostOrder();
-testHasPathSum();
+//testHasPathSum();
+testPrintPaths();
 return 0;
 
 }
@@ -282,9 +285,57 @@ rootNode = insert(rootNode,8);
 rootNode = insert(rootNode,3);
 rootNode = insert(rootNode,7);
 rootNode = insert(rootNode,9);
-if(hasPathSum(rootNode,22) == 1)
+if(hasPathSum(rootNode,32) == 1)
   printf("Works \n");
 else
   printf("you suckk..!! \n");
+
+}
+
+void printPaths(struct node* n) {
+int *path = (int *)malloc(sizeof(int) * maxDepth(n));
+printPathsRecur(n,path,0);
+
+}
+
+void printPathsRecur(struct node* n, int *path,int pathLen) {
+
+if(n != NULL) {
+  path[pathLen++] = n->data;
+  if(n->left != NULL || n->right != NULL) {
+     if(n->right == NULL) {
+       printPathsRecur(n->left,path,pathLen);
+     } 
+     else if(n->left == NULL) {
+       printPathsRecur(n->right,path,pathLen);
+     }
+     else {
+       printPathsRecur(n->left,path,pathLen);
+       printPathsRecur(n->right,path,pathLen);
+
+     } 
+
+  }
+  else {
+    for(int i=0;i<pathLen;i++)
+      printf("%d ",path[i]);
+       
+    printf("\n-----------------------\n");
+  }
+}
+
+}
+
+void testPrintPaths() {
+
+struct node* rootNode = insert(NULL,5);
+rootNode = insert(rootNode,4);
+rootNode = insert(rootNode,8);
+rootNode = insert(rootNode,3);
+rootNode = insert(rootNode,7);
+rootNode = insert(rootNode,9);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,1);
+printPaths(rootNode);
 
 }
