@@ -31,6 +31,8 @@ void mirror(struct node*);
 void testMirror();
 void doubleTree(struct node*);
 void testDoubleTree();
+int sameTree(struct node*,struct node*); 
+void testSameTree();
  
  
 int main() {
@@ -44,7 +46,8 @@ int main() {
 //testHasPathSum();
 //testPrintPaths();
 //testMirror();
-testDoubleTree();
+//testDoubleTree();
+testSameTree();
 return 0;
 
 }
@@ -205,7 +208,6 @@ printf("%d ",n->data);
 
 if(n->right != NULL) {
   printTree(n->right);
-  //printf("%d ",(n)->data);
 }
 
 }
@@ -420,5 +422,50 @@ printf("Printing the tree after doubletree() is called \n");
 doubleTree(rootNode);
 printTree(rootNode);
 printf("Printing the tree after doubletree() is called \n");
+
+}
+
+
+int sameTree(struct node* a, struct node* b) {
+
+if(a != NULL || b != NULL) {
+  if(a != NULL && b != NULL) {
+    if(a->data != b->data)
+      return 0;
+    else {
+      if(a->left == NULL && b->left == NULL && a->right == NULL && b->right == NULL)
+        return 1;
+      else {
+        if(a->left != NULL || b->left != NULL ) {
+          return sameTree(a->left,b->left);
+        }
+        if(a->right != NULL || b->right != NULL ) {
+          return sameTree(a->right,b->right);
+        }
+      }
+    }
+  }
+  else
+    return 0;
+}
+
+}
+
+void testSameTree() {
+struct node* rootNode = insert(NULL,3);
+rootNode = insert(rootNode,4);
+rootNode = insert(rootNode,5);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,1);
+struct node* root = insert(NULL,3);
+root = insert(root,4);
+root = insert(root,5);
+root = insert(root,2);
+root = insert(root,0);
+if(sameTree(rootNode,root) == 1)
+  printf("Trees are same \n");
+else
+  printf("Something went wrong \n");
+
 
 }
