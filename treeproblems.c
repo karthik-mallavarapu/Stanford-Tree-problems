@@ -33,6 +33,8 @@ void doubleTree(struct node*);
 void testDoubleTree();
 int sameTree(struct node*,struct node*); 
 void testSameTree();
+int countTrees(int);
+void testCountTrees(); 
  
  
 int main() {
@@ -47,7 +49,8 @@ int main() {
 //testPrintPaths();
 //testMirror();
 //testDoubleTree();
-testSameTree();
+//testSameTree();
+testCountTrees();
 return 0;
 
 }
@@ -467,5 +470,23 @@ if(sameTree(rootNode,root) == 1)
 else
   printf("Something went wrong \n");
 
-
 }
+
+int countTrees(int numKeys) {
+int count=0;
+if(numKeys == 1 || numKeys == 0)
+  return 1;
+if(numKeys == 2)
+  return 2;
+for(int i=1;i<=numKeys;i++) {
+count += countTrees(numKeys - i) * countTrees(i - 1);
+}
+
+return count;
+}
+
+void testCountTrees() {
+printf("Number of unique trees with values from 1 to 5 are %d \n",countTrees(5)); 
+}
+
+
