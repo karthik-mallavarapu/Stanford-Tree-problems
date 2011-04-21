@@ -18,6 +18,7 @@ int maxDepth(struct node*);
 void testMaxDepth(); 
 int minValue(struct node*);
 void testMinValue(); 
+void testMaxValue(); 
 void printTree(struct node*);
 void testPrintTree(); 
 void printPostOrder(struct node*);
@@ -35,7 +36,10 @@ int sameTree(struct node*,struct node*);
 void testSameTree();
 int countTrees(int);
 void testCountTrees(); 
- 
+int isBST(struct node*);
+void testIsBST(); 
+int maxValue(struct node*); 
+void testMaxValue(); 
  
 int main() {
 
@@ -50,7 +54,9 @@ int main() {
 //testMirror();
 //testDoubleTree();
 //testSameTree();
-testCountTrees();
+//testCountTrees();
+//testMaxValue();
+testIsBST();
 return 0;
 
 }
@@ -489,4 +495,66 @@ void testCountTrees() {
 printf("Number of unique trees with values from 1 to 5 are %d \n",countTrees(5)); 
 }
 
+
+int isBST(struct node* n) {
+if(n != NULL) {
+
+  int value = n->data,checkl = 1,checkr = 1;
+  if(n->left != NULL) {
+    if(value > maxValue(n->left))
+      checkl = isBST(n->left);
+    else
+      return 0;
+  }
+  if(n->right != NULL) {
+    if(value < minValue(n->right))
+      checkr = isBST(n->right);
+    else
+      return 0;
+  }
+if(checkl == 1 && checkr == 1)
+  return 1;
+}
+
+}
+
+int maxValue(struct node* n) {
+
+int max=0,temp=0;
+if(n->right != NULL) {
+  max = (n->right)->data;
+  temp = maxValue(n->right);
+  if(max <= temp)
+    max = temp;
+  return max;
+}
+else
+  return n->data;
+
+}
+void testMaxValue() {
+struct node* rootNode = insert(NULL,3);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,1);
+rootNode = insert(rootNode,5);
+rootNode = insert(rootNode,4);
+rootNode = insert(rootNode,8);
+rootNode = insert(rootNode,9);
+int max = maxValue(rootNode);
+printf("Max Value the binary search tree is %d \n",max);
+}
+
+void testIsBST() {
+
+struct node* rootNode = insert(NULL,5);
+rootNode = insert(rootNode,2);
+rootNode = insert(rootNode,7);
+rootNode = insert(rootNode,1);
+//rootNode->left = insert(rootNode->left,6);
+printTree(rootNode);
+if(isBST(rootNode) == 1)
+  printf("Given tree is a BST \n");
+else
+  printf("Given tree is not a BST \n");
+}
 
